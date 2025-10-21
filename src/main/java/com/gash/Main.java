@@ -3,6 +3,7 @@ package com.gash;
 import java.util.Scanner;
 import com.gash.auth.UserAuthentication;
 import com.gash.auth.TransactionManager;
+import com.gash.auth.CashTransfer;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,6 +27,7 @@ public class Main {
             System.out.println("6. Cash Out");
             System.out.println("7. View Transactions");
             System.out.println("8. Check Balance");
+            System.out.println("9. Transfer Money");
             System.out.println("0. Exit");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
@@ -71,7 +73,14 @@ public class Main {
                     }
                     System.out.println("💰 Current Balance: ₱" + auth.getLoggedInUser().getBalance());
                     break;
-
+                case 9:
+                    if (auth.getLoggedInUser() == null) {
+                        System.out.println("Please log in first!");
+                        break;
+                    }
+                    CashTransfer transfer = new CashTransfer(auth.getConnection(), auth.getLoggedInUser());
+                    transfer.transferMoney();
+                    break;
                 case 0:
                     System.out.println("Exiting...");
                     break;
